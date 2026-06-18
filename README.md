@@ -156,11 +156,7 @@ http://localhost:5173
 
 The development page provides tools for generating injection scripts and bookmarklets.
 
-For detailed local debugging instructions, see:
-
-```text
-docs/DEV.md
-```
+For detailed local debugging instructions, see [docs/DEV.md](docs/DEV.md).
 
 ## Bookmarklet usage
 
@@ -195,13 +191,11 @@ src/providers/
 
 Recommended contribution flow:
 
-```text
-1. Copy an existing provider adapter
-2. Replace platform-specific DOM selectors and event logic
-3. Add local debugging notes
-4. Test normal chat, thinking, search, and streaming output
-5. Submit a pull request
-```
+1. Copy an existing provider adapter.
+2. Replace platform-specific DOM selectors and event logic.
+3. Add local debugging notes.
+4. Test normal chat, thinking, search, and streaming output.
+5. Submit a pull request.
 
 ## Known limitations
 

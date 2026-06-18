@@ -156,11 +156,7 @@ http://localhost:5173
 
 开发页面提供生成注入脚本和 bookmarklet 的工具。
 
-详细的本地调试说明请参见：
-
-```text
-docs/DEV.zh-CN.md
-```
+详细的本地调试说明请参见 [docs/DEV.zh-CN.md](docs/DEV.zh-CN.md)。
 
 ## Bookmarklet 使用
 
@@ -195,13 +191,11 @@ src/providers/
 
 推荐的贡献流程：
 
-```text
-1. 复制一个已有的 provider 适配器
-2. 替换平台特定的 DOM 选择器和事件逻辑
-3. 添加本地调试笔记
-4. 测试普通对话、思考、搜索和流式输出
-5. 提交 Pull Request
-```
+1. 复制一个已有的 provider 适配器。
+2. 替换平台特定的 DOM 选择器和事件逻辑。
+3. 添加本地调试笔记。
+4. 测试普通对话、思考、搜索和流式输出。
+5. 提交 Pull Request。
 
 ## 已知限制
 
