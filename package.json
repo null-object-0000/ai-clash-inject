@@ -1,0 +1,76 @@
+{
+  "name": "@ai-clash/inject",
+  "version": "0.1.0",
+  "description": "A lightweight DOM automation library for controlling AI web platforms.",
+  "type": "module",
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.umd.js"
+    },
+    "./standalone": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/standalone.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "concurrently \"vite build --mode standalone --watch\" \"http-server dist -p 5173 --cors -c-1\"",
+    "dev:build-only": "vite build --mode standalone --watch",
+    "serve": "npx http-server dist -p 5173 --cors -c-1",
+    "build": "vite build && vite build --mode standalone",
+    "build:esm": "vite build",
+    "build:standalone": "vite build --mode standalone",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "ai",
+    "ai-automation",
+    "dom-automation",
+    "browser-automation",
+    "injection",
+    "chatbot",
+    "llm",
+    "deepseek",
+    "doubao",
+    "qwen",
+    "qianwen",
+    "yuanbao",
+    "wenxin",
+    "puppeteer",
+    "playwright",
+    "browser-extension"
+  ],
+  "author": "AI Clash Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/null-object-0000/ai-clash-inject.git"
+  },
+  "bugs": {
+    "url": "https://github.com/null-object-0000/ai-clash-inject/issues"
+  },
+  "homepage": "https://github.com/null-object-0000/ai-clash-inject#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.3",
+    "http-server": "^14.1.1",
+    "typescript": "~6.0.3",
+    "vite": "^8.0.16"
+  },
+  "peerDependencies": {
+    "@types/chrome": "^0.1.43"
+  },
+  "peerDependenciesMeta": {
+    "@types/chrome": {
+      "optional": true
+    }
+  }
+}
