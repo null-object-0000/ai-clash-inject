@@ -55,13 +55,13 @@ Legend:
 ## Installation
 
 ```bash
-bun add @ai-clash/inject
+npm install @ai-clash/inject
 ```
 
-Or with npm:
+Or with Bun:
 
 ```bash
-npm install @ai-clash/inject
+bun add @ai-clash/inject
 ```
 
 > Note: The package is under active development. APIs may change before the first stable release.
