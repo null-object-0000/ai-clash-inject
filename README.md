@@ -137,6 +137,13 @@ await page.evaluate(async () => {
 ## Local development
 
 ```bash
+npm install
+npm run dev
+```
+
+Or with Bun:
+
+```bash
 bun install
 bun dev
 ```
@@ -152,7 +159,7 @@ The development page provides tools for generating injection scripts and bookmar
 For detailed local debugging instructions, see:
 
 ```text
-docs/dev-debug.md
+docs/DEV.md
 ```
 
 ## Bookmarklet usage

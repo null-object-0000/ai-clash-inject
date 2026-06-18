@@ -137,6 +137,13 @@ await page.evaluate(async () => {
 ## 本地开发
 
 ```bash
+npm install
+npm run dev
+```
+
+或使用 Bun：
+
+```bash
 bun install
 bun dev
 ```
@@ -152,7 +159,7 @@ http://localhost:5173
 详细的本地调试说明请参见：
 
 ```text
-docs/dev-debug.md
+docs/DEV.zh-CN.md
 ```
 
 ## Bookmarklet 使用
