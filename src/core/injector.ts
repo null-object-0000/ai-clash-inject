@@ -169,8 +169,14 @@ function isCompletionUrl(url: string): boolean {
 }
 
 let fetchIntercepted = false;
-const rawGetReader = ReadableStream.prototype.getReader;
-const rawDecode = TextDecoder.prototype.decode;
+// 保存原始原型方法引用，用于 eject() 时还原
+const _nativeFetch = window.fetch;
+const _nativeXhrOpen = XMLHttpRequest.prototype.open;
+const _nativeXhrSend = XMLHttpRequest.prototype.send;
+const _nativeDecode = TextDecoder.prototype.decode;
+const _nativeGetReader = ReadableStream.prototype.getReader;
+const rawGetReader = _nativeGetReader;
+const rawDecode = _nativeDecode;
 
 function setupSSEInterceptor() {
   // 只在当前 provider 域名下注入一次（修改原型只需要一次）
@@ -368,6 +374,29 @@ function setupSSEInterceptor() {
       return reader;
     };
   }
+}
+
+/**
+ * 还原 SSE 拦截器修改的所有原型方法
+ * 由 eject() 调用，确保 inject→eject→inject 循环正常工作
+ */
+function teardownSSEInterceptor() {
+  if (!(window as any).__aiclashSSEHooked) return;
+
+  window.fetch = _nativeFetch;
+  XMLHttpRequest.prototype.open = _nativeXhrOpen;
+  XMLHttpRequest.prototype.send = _nativeXhrSend;
+  TextDecoder.prototype.decode = _nativeDecode;
+  ReadableStream.prototype.getReader = _nativeGetReader;
+
+  (window as any).__aiclashSSEHooked = false;
+
+  // 重置模块级 SSE 状态
+  currentProvider = null;
+  sseCallbacks = null;
+  currentCallbacks = null;
+  fetchIntercepted = false;
+  resetSSEState();
 }
 
 // ============================================================================
@@ -1121,16 +1150,16 @@ export function createInjector(options: InjectorOptions): Injector {
     switch (adapter) {
       case 'window': {
         if (!capabilities) throw new Error('Capabilities not initialized');
-        const { setup } = createWindowAdapter(capabilities, globalName);
+        const { setup, cleanup } = createWindowAdapter(capabilities, globalName);
         setup();
-        adapterCleanup = () => { /* cleanup handled in eject */ };
+        adapterCleanup = cleanup;
         return Promise.resolve();
       }
       case 'extension': {
         if (!capabilities) throw new Error('Capabilities not initialized');
-        const { setup } = createExtensionAdapter(capabilities, providerId);
+        const { setup, cleanup } = createExtensionAdapter(capabilities, providerId);
         setup();
-        adapterCleanup = () => { /* cleanup handled in eject */ };
+        adapterCleanup = cleanup;
         return Promise.resolve();
       }
       case 'ws': {
@@ -1173,10 +1202,8 @@ export function createInjector(options: InjectorOptions): Injector {
         adapterCleanup = null;
       }
 
-      // 清理全局变量
-      if (adapter === 'window') {
-        delete (window as any)[globalName];
-      }
+      // 还原 SSE 拦截器修改的原型方法
+      teardownSSEInterceptor();
 
       capabilities = null;
       isInjected = false;
