@@ -11,15 +11,23 @@ export const wenxinProvider: ProviderConfig = {
   auth: {
     failureMessage: '文心一言当前未登录，请先完成登录后再重试',
     async getLoginState() {
-      const response = await fetch('https://yiyan.baidu.com/eb/user/info', {
-        headers: {
-          'content-type': 'application/json',
-          'device-type': 'pc',
-        },
-        referrer: 'https://yiyan.baidu.com/',
-        body: JSON.stringify({ timestamp: Date.now(), deviceType: 'pc' }),
-        method: 'POST',
-      });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      let response: Response;
+      try {
+        response = await fetch('https://yiyan.baidu.com/eb/user/info', {
+          headers: {
+            'content-type': 'application/json',
+            'device-type': 'pc',
+          },
+          referrer: 'https://yiyan.baidu.com/',
+          body: JSON.stringify({ timestamp: Date.now(), deviceType: 'pc' }),
+          method: 'POST',
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(timeoutId);
+      }
       const data = await response.json();
       if (data?.ret === 0 && data?.content?.isLogin === true) {
         return { status: 'logged_in' };

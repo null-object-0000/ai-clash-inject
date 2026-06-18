@@ -98,9 +98,9 @@ export const yuanbaoProvider: ProviderConfig = {
           return null;
         }
 
-        // 移除 data: 前缀
-        if (line.startsWith('data: ')) {
-          line = line.substring(6).trim();
+        // 移除 data: 前缀（空格可选，符合 SSE 规范）
+        if (line.startsWith('data:')) {
+          line = line.substring(5).trim();
         }
 
         // 跳过非 JSON 行（如 traceId 注释）

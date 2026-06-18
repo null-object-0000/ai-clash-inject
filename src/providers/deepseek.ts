@@ -98,10 +98,18 @@ export const deepseekProvider: ProviderConfig = {
         return { status: 'logged_out', message: 'DeepSeek 当前未登录，请先完成登录后再重试' };
       }
 
-      const response = await fetch('https://chat.deepseek.com/api/v0/users/current', {
-        headers: { authorization: `Bearer ${token}` },
-        method: 'GET',
-      });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      let response: Response;
+      try {
+        response = await fetch('https://chat.deepseek.com/api/v0/users/current', {
+          headers: { authorization: `Bearer ${token}` },
+          method: 'GET',
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(timeoutId);
+      }
       const data = await response.json();
       if (data?.code === 0 && data?.data) {
         return { status: 'logged_in' };
@@ -163,9 +171,9 @@ export const deepseekProvider: ProviderConfig = {
           currentIsThink = false;
           return { text: '', isThink: null, done: true };
         }
-        if (!line.startsWith('data: ')) return null;
+        if (!line.startsWith('data:')) return null;
 
-        const json = line.substring(6).trim();
+        const json = line.substring(5).trim();
         if (!json || json === '[DONE]') return null;
 
         try {

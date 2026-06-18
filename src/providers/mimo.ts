@@ -47,12 +47,20 @@ export const xiaomiProvider: ProviderConfig = {
   auth: {
     failureMessage: '小米 MiMo 当前未登录，请先完成登录后再重试',
     async getLoginState() {
-      const response = await fetch('https://aistudio.xiaomimimo.com/open-apis/user/mi/get', {
-        headers: {
-          'content-type': 'application/json',
-        },
-        method: 'GET',
-      });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      let response: Response;
+      try {
+        response = await fetch('https://aistudio.xiaomimimo.com/open-apis/user/mi/get', {
+          headers: {
+            'content-type': 'application/json',
+          },
+          method: 'GET',
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(timeoutId);
+      }
       const data = await response.json();
       if (data?.code === 0 && data?.data?.userId) {
         return { status: 'logged_in' };

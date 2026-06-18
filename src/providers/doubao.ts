@@ -131,11 +131,11 @@ export const doubaoProvider: ProviderConfig = {
       ],
       parseLine: (line: string) => {
         // 非 data 行由 injector 处理，这里只处理 data 行
-        if (!line.startsWith('data: ')) {
+        if (!line.startsWith('data:')) {
           return null;
         }
 
-        const json = line.substring(6).trim();
+        const json = line.substring(5).trim();
         if (!json || json === '[DONE]') {
           // 结束时重置状态
           hasStartedFormalAnswer = false;
