@@ -60,7 +60,16 @@ AI Clash Inject is in early development. Provider adapters may break when AI web
 
 ## Installation
 
-> **Note:** This package has not been published to npm yet. To use it, clone this repository and build locally. See [Local development](#local-development) below.
+> **Note:** This package has not been published to npm yet. For now, clone this repository and build it locally.
+
+```bash
+git clone https://github.com/null-object-0000/ai-clash-inject.git
+cd ai-clash-inject
+npm install
+npm run build
+```
+
+Once published, you will be able to install with:
 
 ```bash
 npm install @ai-clash/inject
@@ -71,8 +80,6 @@ Or with Bun:
 ```bash
 bun add @ai-clash/inject
 ```
-
-> Note: The package is under active development. APIs may change before the first stable release.
 
 ## Quick start
 
@@ -87,6 +94,8 @@ const injector = createInjector({
 });
 
 await injector.inject();
+
+await injector.call('chat', 'fill', 'Hello from AI Clash Inject');
 
 await injector.call('chat', 'send', {
   onSseChunk: (text, isThinking, stage, conversationId) => {
