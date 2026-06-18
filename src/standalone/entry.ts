@@ -198,11 +198,6 @@ window.addEventListener('message', async (event) => {
       console.log('[AI Clash Inject] MAIN world receive RPC call: chat.send');
       console.log('[AI Clash Inject] Sending message:', prompt.slice(0, 50), 'options:', options);
 
-      // 不调用，直接返回空结果（调试用）
-      // waitingInjector.call(capability, method, prompt, options, wrappedCallbacks);
-      // console.log('[AI Clash Inject] SKIPPED for debugging');
-
-      // 正常调用
       waitingInjector.call(capability, method, prompt, options, wrappedCallbacks)
         .then((result: any) => {
           console.log('[AI Clash Inject] chat.send completed:', result);

@@ -825,82 +825,34 @@ function simulateEnter(el: Element): void {
 // 注意：simulateRealClick 函数已从 dom-utils.js 导入
 
 /**
- * 创建思考模式切换能力
+ * 创建 toggle 能力（思考模式 / 搜索模式通用工厂）
  */
-function createThinkingCapability(provider: ProviderConfig): Capabilities['thinking'] {
-  const { actions } = provider;
-  const thinking = actions.thinking;
-
-  if (!thinking) {
-    return undefined;
-  }
-
-  const impl = thinking as ToggleAction;
+function createToggleCapability(action: ToggleAction | undefined) {
+  if (!action) return undefined;
   return {
     async getState() {
-      return impl.getState();
+      return action.getState();
     },
     async enable() {
-      const current = await impl.getState();
+      const current = await action.getState();
       if (!current.found) {
         return { success: false, changed: false, reason: 'not-found' };
       }
       if (current.enabled) {
         return { success: true, changed: false };
       }
-      const success = await impl.enable();
+      const success = await action.enable();
       return { success, changed: success };
     },
     async disable() {
-      const current = await impl.getState();
+      const current = await action.getState();
       if (!current.found) {
         return { success: false, changed: false, reason: 'not-found' };
       }
       if (!current.enabled) {
         return { success: true, changed: false };
       }
-      const success = await impl.disable();
-      return { success, changed: success };
-    },
-  };
-}
-
-/**
- * 创建智能搜索切换能力
- */
-function createSearchCapability(provider: ProviderConfig): Capabilities['search'] {
-  const { actions } = provider;
-  const search = actions.search;
-
-  if (!search) {
-    return undefined;
-  }
-
-  const impl = search as ToggleAction;
-  return {
-    async getState() {
-      return impl.getState();
-    },
-    async enable() {
-      const current = await impl.getState();
-      if (!current.found) {
-        return { success: false, changed: false, reason: 'not-found' };
-      }
-      if (current.enabled) {
-        return { success: true, changed: false };
-      }
-      const success = await impl.enable();
-      return { success, changed: success };
-    },
-    async disable() {
-      const current = await impl.getState();
-      if (!current.found) {
-        return { success: false, changed: false, reason: 'not-found' };
-      }
-      if (!current.enabled) {
-        return { success: true, changed: false };
-      }
-      const success = await impl.disable();
+      const success = await action.disable();
       return { success, changed: success };
     },
   };
@@ -910,8 +862,8 @@ function createCapabilities(provider: ProviderConfig): Capabilities {
   return {
     chat: createChatCapability(provider),
     auth: createAuthCapability(provider),
-    thinking: createThinkingCapability(provider),
-    search: createSearchCapability(provider),
+    thinking: createToggleCapability(provider.actions.thinking),
+    search: createToggleCapability(provider.actions.search),
     // model: createModelCapability(provider), // TODO: 实现模型切换能力
   };
 }
