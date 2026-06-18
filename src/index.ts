@@ -25,6 +25,7 @@ export type {
   ProviderConfig,
   ProviderId,
   AdapterType,
+  SendOptions,
   SendCallbacks,
   LoginState,
   LoginStatus,
