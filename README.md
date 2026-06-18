@@ -1,5 +1,7 @@
 # AI Clash Inject
 
+**English** | [简体中文](./README.zh-CN.md)
+
 A lightweight DOM automation library for controlling AI web platforms such as DeepSeek, Doubao, Qwen, Yuanbao, and more.
 
 AI Clash Inject 是 AI Clash 的底层网页控制库，用于抽象不同 AI 网站的输入、发送、响应读取、思考模式、联网搜索和流式输出监听等能力。
