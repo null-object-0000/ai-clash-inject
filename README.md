@@ -54,7 +54,13 @@ Legend:
 * ⚠️ Partially supported
 * ➖ Not supported
 
+## Status
+
+AI Clash Inject is in early development. Provider adapters may break when AI websites update their DOM structure or streaming format.
+
 ## Installation
+
+> **Note:** This package has not been published to npm yet. To use it, clone this repository and build locally. See [Local development](#local-development) below.
 
 ```bash
 npm install @ai-clash/inject
@@ -100,7 +106,7 @@ await injector.call('chat', 'send', {
 });
 ```
 
-### Inject with a script tag
+### Inject with a local standalone script
 
 ```html
 <script src="http://localhost:5173/standalone.js"></script>
@@ -167,6 +173,8 @@ javascript:(async function(){if(!window.AIClashInject){const s=document.createEl
 ```
 
 Then open a supported AI website and click the bookmarklet.
+
+After injection, `window.AIClashInject` guards against double-loading. The runtime API is exposed as `window.__AI_CLASH` — use that for all chat, thinking, and search operations.
 
 ## Provider adapter
 

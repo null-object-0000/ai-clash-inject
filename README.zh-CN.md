@@ -54,7 +54,13 @@ AI Clash Inject 可用于多种场景：
 * ⚠️ 部分支持
 * ➖ 不支持
 
+## 项目状态
+
+AI Clash Inject 仍处于早期开发阶段。当 AI 网站更新 DOM 结构或流式响应格式时，provider 适配器可能失效。
+
 ## 安装
+
+> **注意：** 当前包暂未发布到 npm。如需使用，请先 clone 本仓库并本地构建。参见下方[本地开发](#本地开发)。
 
 ```bash
 npm install @ai-clash/inject
@@ -100,7 +106,7 @@ await injector.call('chat', 'send', {
 });
 ```
 
-### 通过 script 标签注入
+### 通过本地 standalone 脚本注入
 
 ```html
 <script src="http://localhost:5173/standalone.js"></script>
@@ -167,6 +173,8 @@ javascript:(async function(){if(!window.AIClashInject){const s=document.createEl
 ```
 
 然后打开支持的 AI 网站，点击 bookmarklet 即可。
+
+注入后，`window.AIClashInject` 用于防重复加载。运行时 API 暴露在 `window.__AI_CLASH` 上，所有对话、思考、搜索操作均通过它调用。
 
 ## Provider 适配器
 

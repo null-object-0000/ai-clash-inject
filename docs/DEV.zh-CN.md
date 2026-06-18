@@ -32,6 +32,8 @@ bun dev
 4. 打开 DeepSeek 等 AI 网站
 5. 点击书签栏的"AI Clash Inject"
 
+注入后，`window.AIClashInject` 用于防重复加载。运行时 API 暴露在 `window.__AI_CLASH` 上。以下示例均通过 `window.__AI_CLASH` 调用。
+
 ```text
 javascript:(async function(){if(!window.AIClashInject){const s=document.createElement('script');s.src='http://localhost:5173/standalone.js';await new Promise(r=>{s.onload=r;document.head.appendChild(s);});}})();
 ```

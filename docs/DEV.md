@@ -32,6 +32,8 @@ The dev page provides an injection code generator for building bookmarklets and 
 4. Open DeepSeek or another AI website
 5. Click the "AI Clash Inject" bookmarklet
 
+After injection, `window.AIClashInject` guards against double-loading. The runtime API is exposed as `window.__AI_CLASH`. All examples below use `window.__AI_CLASH`.
+
 ```text
 javascript:(async function(){if(!window.AIClashInject){const s=document.createElement('script');s.src='http://localhost:5173/standalone.js';await new Promise(r=>{s.onload=r;document.head.appendChild(s);});}})();
 ```
