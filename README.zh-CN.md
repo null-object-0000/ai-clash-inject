@@ -69,15 +69,11 @@ npm install
 npm run build
 ```
 
-待发布后，即可通过以下命令安装：
+待发布后，即可通过 npm 或 Bun 安装：
 
 ```bash
 npm install @ai-clash/inject
-```
-
-或使用 Bun：
-
-```bash
+# 或
 bun add @ai-clash/inject
 ```
 
@@ -120,12 +116,15 @@ await injector.call('chat', 'send', {
 ```html
 <script src="http://localhost:5173/standalone.js"></script>
 <script>
-  await window.__AI_CLASH.chat.fill('你好');
-  await window.__AI_CLASH.chat.send({
-    onComplete: (fullText) => {
-      console.log(fullText);
-    },
-  });
+  (async () => {
+    await window.__AI_CLASH.chat.fill('你好');
+
+    await window.__AI_CLASH.chat.send({
+      onComplete: (fullText) => {
+        console.log(fullText);
+      },
+    });
+  })();
 </script>
 ```
 

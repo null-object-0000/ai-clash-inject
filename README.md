@@ -69,15 +69,11 @@ npm install
 npm run build
 ```
 
-Once published, you will be able to install with:
+Once published, you will be able to install with npm or Bun:
 
 ```bash
 npm install @ai-clash/inject
-```
-
-Or with Bun:
-
-```bash
+# or
 bun add @ai-clash/inject
 ```
 
@@ -120,12 +116,15 @@ await injector.call('chat', 'send', {
 ```html
 <script src="http://localhost:5173/standalone.js"></script>
 <script>
-  await window.__AI_CLASH.chat.fill('Hello');
-  await window.__AI_CLASH.chat.send({
-    onComplete: (fullText) => {
-      console.log(fullText);
-    },
-  });
+  (async () => {
+    await window.__AI_CLASH.chat.fill('Hello');
+
+    await window.__AI_CLASH.chat.send({
+      onComplete: (fullText) => {
+        console.log(fullText);
+      },
+    });
+  })();
 </script>
 ```
 
