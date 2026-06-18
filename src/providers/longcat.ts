@@ -1,5 +1,5 @@
 /**
- * LongCat (天工) Provider Configuration
+ * LongCat (龙猫) Provider Configuration
  */
 
 import type { ProviderConfig, ToggleAction } from '../core/types.js';
@@ -62,8 +62,8 @@ const searchAction: ToggleAction = {
 
 export const longcatProvider: ProviderConfig = {
   id: 'longcat',
-  name: 'LongCat (天工)',
-  domain: 'www.tiangong.cn',
+  name: 'LongCat (龙猫)',
+  domain: 'longcat.chat',
   actions: {
     // 基础对话能力
     chat: {
